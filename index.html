@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WattLink — Social Energy Transparency</title>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="See your town's energy mix, savings, and join the community chain. A 2‑week pilot to build trust in energy aggregation."/>
+</head>
+<body>
+  <header class="wl-header">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">⚡</div>
+        <div class="name">WattLink</div>
+      </div>
+      <nav class="nav">
+        <a href="#how">How it works</a>
+        <a href="#viz">Your mix</a>
+        <a href="#chain">Community chain</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Make energy aggregation <span class="accent">visible</span>, <span class="accent">social</span>, and <span class="accent">trustworthy</span>.</h1>
+        <p class="sub">Enter your ZIP to see your community's energy mix, estimated savings from aggregation, and your share of clean power. Generate a share card and add your name to the chain.</p>
+        <form id="zipForm" class="zip-form">
+          <label for="zip">ZIP code</label>
+          <input id="zip" name="zip" inputmode="numeric" minlength="5" maxlength="5" placeholder="e.g., 43210" required/>
+          <button type="submit" class="btn primary">View my mix</button>
+          <button id="shareBtn" type="button" class="btn ghost">Generate share card</button>
+        </form>
+        <div class="hero-badges" id="heroBadges">
+          <span class="badge">No app required</span>
+          <span class="badge">Transparent by design</span>
+          <span class="badge">2‑week pilot</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-card">
+              <h3>Your ZIP</h3>
+              <div id="mockZip">—</div>
+              <div class="sparkline" id="sparkline"></div>
+              <div class="mix-legend" id="mixLegend"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="how">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>Scan a QR or enter ZIP</li>
+        <li>See your town’s energy mix and savings</li>
+        <li>Join WattLink and get your share card</li>
+        <li>Share to grow the <strong>Community Chain</strong></li>
+      </ol>
+    </section>
+
+    <section id="viz" class="viz">
+      <div class="viz-left">
+        <h2>Your Energy Mix</h2>
+        <div class="statline">
+          <div><strong>Clean Share:</strong> <span id="cleanShare">—</span></div>
+          <div><strong>Est. Annual Savings:</strong> <span id="savings">$—</span></div>
+          <div><strong>CO₂ Avoided:</strong> <span id="co2">— tons</span></div>
+        </div>
+        <div class="svg-wrap">
+          <svg id="mixViz" width="420" height="280" role="img" aria-label="Energy mix bubble visualization"></svg>
+        </div>
+      </div>
+      <div class="viz-right">
+        <div class="card">
+          <h3>Personalized Share Card</h3>
+          <p>Generate a PNG you can post anywhere. Includes your ZIP, clean share, and today’s date.</p>
+          <button id="makeCard" class="btn primary full">Generate & Download</button>
+          <canvas id="cardCanvas" width="1080" height="1350" class="hidden"></canvas>
+          <a id="downloadLink" class="btn secondary full hidden" download>Download PNG</a>
+          <p class="hint">Tip: On mobile, use the <em>Share</em> button after download to post to Instagram or messages.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="chain" class="chain">
+      <h2>Community Chain</h2>
+      <p>Every share adds a link to the chain. Invite friends to connect their <em>watt</em>.</p>
+      <div id="chainViz" class="chain-viz"></div>
+    </section>
+  </main>
+
+  <footer class="wl-footer">
+    <div class="wrap footer-wrap">
+      <div>© <span id="year"></span> WattLink — Pilot concept for youth energy transparency.</div>
+      <div class="smallprint">Not an official utility. Data visualizations are approximate for demo purposes.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
