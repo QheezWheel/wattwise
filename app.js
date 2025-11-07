@@ -85,32 +85,78 @@ $("zipForm").addEventListener("submit",(e)=>{
   if(!/^\d{5}$/.test(zip))return;
   populateUI(zip,profileForZIP(zip));
 });
+$("makeCard").addEventListener("click", () => {
+  const zip = $("mockZip").textContent || "—";
+  const supplier = $("p_supplier").textContent || "—";
+  const utility = $("p_utility").textContent || "—";
+  const clean = $("p_cleanShare").textContent || "—";
+  const comm = $("p_commRate").textContent || "—";
+  const market = $("p_marketRate").textContent || "—";
+  const hh = $("p_hhSavings").textContent || "—";
 
-$("makeCard").addEventListener("click",()=>{
-  const zip=$("mockZip").textContent||"—";
-  const supplier=$("p_supplier").textContent||"—";
-  const utility=$("p_utility").textContent||"—";
-  const clean=$("p_cleanShare").textContent||"—";
-  const comm=$("p_commRate").textContent||"—";
-  const market=$("p_marketRate").textContent||"—";
-  const hh=$("p_hhSavings").textContent||"—";
-  const canvas=$("cardCanvas"),ctx=canvas.getContext("2d");
-  ctx.fillStyle="#0b0d12";ctx.fillRect(0,0,1080,1080);
-  ctx.fillStyle="#e6ecff";ctx.font="bold 56px system-ui";ctx.fillText("WattWise • WattLink",60,110);
-  ctx.fillStyle="#6ee7ff";ctx.font="bold 120px system-ui";ctx.fillText(zip,60,240);
-  ctx.fillStyle="#e6ecff";ctx.font="30px system-ui";
-  ctx.fillText(`Supplier: ${supplier}`,60,320);
-  ctx.fillText(`Utility: ${utility}`,60,370);
-  ctx.fillText(`Clean Share: ${clean}`,60,420);
-  ctx.fillText(`Rate: ${comm} / ${market}`,60,470);
-  ctx.fillStyle="#52ffa8";ctx.fillText(`Savings/HH: ${hh}`,60,520);
-  const today=new Date().toLocaleDateString();
-  ctx.fillStyle="#8891a7";ctx.fillText(`Generated ${today} • wattwise-theta.vercel.app`,60,980);
-  const link=$("downloadLink");
-  link.href=canvas.toDataURL("image/png");
-  link.download=`WattWise_${zip}.png`;
+  const canvas = $("cardCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // ---- Improved Visual Style ----
+  const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
+  grad.addColorStop(0, "#0b0d12");
+  grad.addColorStop(1, "#121723");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, 1080, 1080);
+
+  // Header
+  ctx.fillStyle = "#6ee7ff";
+  ctx.font = "bold 60px system-ui";
+  ctx.fillText("WattWise • WattLink", 60, 100);
+
+  // ZIP highlight
+  ctx.fillStyle = "#e6ecff";
+  ctx.font = "bold 160px system-ui";
+  ctx.fillText(zip, 60, 270);
+
+  // Divider line
+  ctx.strokeStyle = "#1f2636";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(60, 300);
+  ctx.lineTo(1020, 300);
+  ctx.stroke();
+
+  // Body text
+  ctx.fillStyle = "#e6ecff";
+  ctx.font = "28px system-ui";
+  let y = 360;
+  const lineGap = 60;
+  const lines = [
+    `Supplier: ${supplier}`,
+    `Utility: ${utility}`,
+    `Clean Share: ${clean}`,
+    `Rate: ${comm} / ${market}`,
+    `Savings per HH: ${hh}`,
+  ];
+  lines.forEach((txt) => {
+    ctx.fillText(txt, 60, y);
+    y += lineGap;
+  });
+
+  // Accent metrics
+  ctx.fillStyle = "#52ffa8";
+  ctx.font = "bold 46px system-ui";
+  ctx.fillText(`${clean} Clean • ${hh} Saved`, 60, y + 40);
+
+  // Footer
+  ctx.fillStyle = "#8891a7";
+  ctx.font = "26px system-ui";
+  const today = new Date().toLocaleDateString();
+  ctx.fillText(`Generated ${today} • wattwise-theta.vercel.app`, 60, 1020);
+
+  // Save link
+  const link = $("downloadLink");
+  link.href = canvas.toDataURL("image/png");
+  link.download = `WattWise_${zip}.png`;
   link.classList.remove("hidden");
 });
+
 
 populateUI("00000",profileForZIP("00000"));
 
