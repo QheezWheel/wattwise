@@ -1,145 +1,59 @@
+<!-- Updated WattLink site preview with blue-highlighted title and compact share card -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WattLink — Community Energy Transparency</title>
-  <link rel="stylesheet" href="style.css"/>
-  <meta name="description" content="See your town's supplier, status, utility, energy mix, rates, savings, community chain, and collective impact."/>
+  <title>WattLink — Making Energy Aggregation Visible, Trustworthy, and Social</title>
+  <style>
+:root{
+  --blue: #6ee7ff;
+  --bg: #0b0d12; --card: #121723; --muted: #8891a7; --text: #e6ecff; --accent: #6ee7ff; --accent-2: #7c4dff; --border: #1f2636; --good: #52ffa8;
+}
+body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; margin:0; }
+.wrap { width: min(1100px, 92vw); margin: 0 auto; }
+header { background: rgba(11,13,18,.8); border-bottom: 1px solid var(--border); backdrop-filter: blur(6px); position: sticky; top:0; z-index:9; }
+header .wrap { display:flex; align-items:center; justify-content:space-between; padding:12px 0; }
+.hero { padding:60px 0; text-align:center; }
+.hero h1 { font-size:clamp(28px,3.2vw,42px); line-height:1.1; }
+.hero h1 .blue { color: var(--blue); }
+.hero p { color: var(--muted); max-width:640px; margin:10px auto 0; }
+section { margin:40px 0; }
+.viz-right .card { max-width: 360px; margin:auto; padding:16px; border:1px solid var(--border); border-radius:16px; background:var(--card); }
+.viz-right .card h3 { margin-top:0; }
+.viz-right .card p { font-size:14px; color:var(--muted); }
+.viz-right .card button { width:100%; padding:10px 0; background:linear-gradient(135deg,rgba(110,231,255,.18),rgba(124,77,255,.18)); color:var(--text); border:none; border-radius:10px; cursor:pointer; }
+footer { border-top:1px solid var(--border); padding:20px 0; text-align:center; font-size:14px; color:var(--muted); }
+  </style>
 </head>
 <body>
-  <header class="wl-header">
+  <header>
     <div class="wrap">
-      <div class="brand">
-        <div class="logo">⚡</div>
-        <div class="name">WattLink</div>
-      </div>
-      <nav class="nav">
-        <a href="#snapshot">Snapshot</a>
-        <a href="#viz">Mix & Rates</a>
-        <a href="#chain">Community</a>
-      </nav>
+      <div class="brand"><span style="font-size:24px;">⚡</span> <strong>WattLink</strong></div>
     </div>
   </header>
 
   <main class="wrap">
     <section class="hero">
-      <div class="hero-left">
-        <h1>Transparent community energy — at a glance.</h1>
-        <p class="sub">Enter your ZIP to view your <strong>supplier</strong>, <strong>status</strong> (aggregation member or not), <strong>utility</strong>, <strong>energy mix</strong>, <strong>rates & savings</strong>, <strong>community chain</strong>, and <strong>collective impact</strong>.</p>
-        <form id="zipForm" class="zip-form">
-          <label for="zip">ZIP code</label>
-          <input id="zip" name="zip" inputmode="numeric" minlength="5" maxlength="5" placeholder="e.g., 43210" required/>
-          <button type="submit" class="btn primary">Update</button>
-          <button id="shareBtn" type="button" class="btn ghost">Share card</button>
-        </form>
-        <div class="hero-badges">
-          <span class="badge">Supplier & Status</span>
-          <span class="badge">Rates & Savings</span>
-          <span class="badge">Collective Impact</span>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="phone">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="phone-card">
-              <h3>Your ZIP</h3>
-              <div id="mockZip">—</div>
-              <div class="mini-stats">
-                <div><span class="k">Supplier</span><span id="miniSupplier">—</span></div>
-                <div><span class="k">Status</span><span id="miniStatus">—</span></div>
-                <div><span class="k">Utility</span><span id="miniUtility">—</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h1>Making Energy Aggregation <span class="blue">Visible</span>, <span class="blue">Trustworthy</span>, and <span class="blue">Social</span>.</h1>
+      <p>View your supplier, aggregation status, utility, energy mix, community savings, and impact — all in one transparent dashboard.</p>
     </section>
 
-    <section id="snapshot" class="snapshot">
-      <h2>Community Snapshot</h2>
-      <div class="grid-cards" id="snapshotGrid">
-        <div class="card stat">
-          <div class="k">Supplier</div>
-          <div class="v" id="supplier">—</div>
-          <div class="hint">Retail supplier serving your community</div>
-        </div>
-        <div class="card stat">
-          <div class="k">Status</div>
-          <div class="v" id="status">—</div>
-          <div class="hint">Aggregation member or not</div>
-        </div>
-        <div class="card stat">
-          <div class="k">Utility Company</div>
-          <div class="v" id="utility">—</div>
-          <div class="hint">Wires company that delivers power</div>
-        </div>
-        <div class="card stat">
-          <div class="k">Energy Mix</div>
-          <div class="v"><span id="mixRenew">—</span> renewable / <span id="mixConv">—</span> conventional</div>
-          <div class="hint">Renewable = solar·wind·hydro</div>
-        </div>
-        <div class="card stat">
-          <div class="k">Average Community Rate</div>
-          <div class="v"><span id="commRate">—</span>¢/kWh</div>
-          <div class="hint">Compared to typical market rate</div>
-        </div>
-        <div class="card stat">
-          <div class="k">Typical Market Rate</div>
-          <div class="v"><span id="mktRate">—</span>¢/kWh</div>
-          <div class="hint">Recent average in your area</div>
-        </div>
-        <div class="card stat good">
-          <div class="k">Savings per Household</div>
-          <div class="v">$<span id="savingsHH">—</span>/yr</div>
-          <div class="hint">Based on est. annual usage</div>
-        </div>
-        <div class="card stat accent">
-          <div class="k">Collective Impact</div>
-          <div class="v">$<span id="collectiveSavings">—</span> saved · <span id="collectiveCO2">—</span> t CO₂ avoided</div>
-          <div class="hint">Community-wide, estimated</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="viz" class="viz">
-      <div class="viz-left">
-        <h2>Energy Mix & Rates</h2>
-        <div class="statline">
-          <div><strong>Clean Share (incl. nuclear):</strong> <span id="cleanShare">—</span></div>
-          <div><strong>Renewable Only:</strong> <span id="renewOnly">—</span></div>
-          <div><strong>CO₂ Avoided/HH:</strong> <span id="co2HH">— tons</span></div>
-        </div>
-        <div class="svg-wrap">
-          <svg id="mixViz" width="420" height="280" role="img" aria-label="Energy mix bubble visualization"></svg>
-        </div>
-      </div>
+    <section class="viz">
       <div class="viz-right">
         <div class="card">
           <h3>Personalized Share Card</h3>
-          <p>Create a PNG with supplier, status, rates, savings, and renewable share.</p>
-          <button id="makeCard" class="btn primary full">Generate & Download</button>
-          <canvas id="cardCanvas" width="1080" height="1350" class="hidden"></canvas>
-          <a id="downloadLink" class="btn secondary full hidden" download>Download PNG</a>
+          <p>Create a small, shareable image summarizing your community’s clean-energy progress.</p>
+          <button>Generate & Download</button>
         </div>
       </div>
     </section>
-
-    <section id="chain" class="chain">
-      <h2>Community Chain</h2>
-      <p>Every share adds a link to the chain. Invite friends to connect their <em>watt</em>.</p>
-      <div id="chainViz" class="chain-viz"></div>
-    </section>
   </main>
 
-  <footer class="wl-footer">
-    <div class="wrap footer-wrap">
-      <div>© <span id="year"></span> WattLink — Pilot concept for community energy transparency.</div>
-      <div class="smallprint">Not an official utility. Demo data for prototyping only.</div>
-    </div>
+  <footer>
+    © <span id="year"></span> WattLink — Prototype for community energy transparency.<br/>
+    <small>Visit <strong>wattwise-theta.vercel.app</strong></small>
   </footer>
-
-  <script src="app.js"></script>
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
